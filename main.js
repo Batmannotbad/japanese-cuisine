@@ -1,5 +1,6 @@
 const navbar = document.querySelector('.navbar-list');
 const navbarLinks = document.querySelectorAll('.navbar-link');
+const backToTop = document.querySelector('.back-to-top');
 const phone = document.getElementById('phone');
 const firstname = document.getElementById('name');
 const surname = document.getElementById('surname');
@@ -21,6 +22,16 @@ navbarLinks.forEach(function(link) {
         navbar.classList.remove('active')
     } 
 })
+
+//back to top sticky
+
+window.addEventListener("scroll", function () {
+  if (window.scrollY >= 100) {
+    backToTop.classList.add("active");
+  } else {
+    backToTop.classList.remove("active");
+  }
+});
 
 //booking form validation
 function showError(input, message) {
