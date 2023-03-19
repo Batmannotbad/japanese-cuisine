@@ -38,7 +38,6 @@
 */
 
 --transition-1: 0.25s ease;
-  
 }
 
 /*-----------------------------------*\
@@ -837,6 +836,13 @@ select option {
     color: var(--cream-white);
     border: 3px solid rgb(255,44,68);
     border-radius: 50%;
+    transition: var(--transition-1);
+    transform: translateY(200%);
+    transition:all 300ms linear;
+}
+
+.back-to-top.active {
+    transform: translateY(0%);
 }
 
 /*-----------------------------------*\
