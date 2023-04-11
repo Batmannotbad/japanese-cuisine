@@ -1,0 +1,55 @@
+.auth-wrapper {
+    font-family: 'Dongle', sans-serif;
+    width: 100%;
+    padding: 80px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("../../../public/assets/images/BgAuth.png");
+    background-repeat: no-repeat;
+    background-size: 1600px;
+    background-position: 50% 30%;
+}
+
+.auth-wrapper .auth-form {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-wrapper .auth-form .auth-navigation {
+    display: flex;
+    flex-direction: row;
+    height: 56px;
+}
+
+.auth-wrapper .auth-form .auth-navigation .register-navigation {
+    width: 50%;
+    text-align: center;
+    line-height: 56px;
+    font-size: 35px;
+    color: #fff;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.register-navigation,.login-navigation:hover {
+    cursor: pointer;
+}
+
+.auth-wrapper .auth-form .auth-navigation .login-navigation {
+    width: 50%;
+    text-align: center;
+    line-height: 56px;
+    font-size: 35px;
+    color: #fff;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.auth-wrapper .auth-form .foods-icon {
+    width: 100%;
+    display: flex;
+    margin: 28px 0px;
+    justify-content: center;
+}

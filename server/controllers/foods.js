@@ -7,30 +7,30 @@ const getFoodsColelction = () => {
 
 //CREATE
 export const createFood = async (req, res) => {
-    if (req.user.isAdmin) {
-        const {
-            name,
-            price,
-            desc,
-            picturePath,
-            type
-        } = req.body;
+    // if (req.user.isAdmin) {
         try {
+            const {
+                name,
+                price,
+                desc,
+                picturePath,
+                type,
+            } = req.body;
             await getFoodsColelction().insertOne({
-                name: name,
-                price: price,
-                desc: desc,
-                picturePath: picturePath,
-                type: type,
+                name,
+                price,
+                desc,
+                picturePath,
+                type,
                 isAvailable: true
             });
-            res.status(201).json({ msg: 'Created successfully' });
+            res.status(201).json({ msg: "Created successfully" });
         } catch (err) {
             res.status(500).json(err);
         }
-    } else {
-        res.status(403).json({ msg: 'Access denied' });
-    }
+    // } else {
+    //     res.status(403).json({ msg: 'Access denied' });
+    // }
 };
 
 //READ
@@ -105,7 +105,7 @@ export const updateFood = async (req, res) => {
 
 //DELETE
 export const deleteFood = async (req, res) => {
-    if (req.user.isAdmin) {
+    // if (req.user.isAdmin) {
         try {
             await getFoodsColelction().deleteOne(
                 {
@@ -116,19 +116,21 @@ export const deleteFood = async (req, res) => {
         } catch (err) {
             res.status(500).json(err);
         }
-    } else {
-        res.status(403).json({ msg: 'Access denied' });
-    }
+    // } else {
+    //     res.status(403).json({ msg: 'Access denied' });
+    // }
 };
 
 //DELETE MANY
 export const deleteFoods = async (req, res) => {
-    if (req.user.isAdmin) {
-        const idList = [];
-        req.body.forEach(element => {
-            const id = new ObjectId(element)
+    // if (req.user.isAdmin) {
+        const list = JSON.parse(req.body);
+        let idList = [];
+        list.forEach(item => {
+            const id = new ObjectId(item)
             idList.push(id)
         });
+        
 
         try {
             await getFoodsColelction().deleteMany(
@@ -140,7 +142,7 @@ export const deleteFoods = async (req, res) => {
         } catch (err) {
             res.status(500).json(err);
         }
-     } else {
-        res.status(403).json({ msg: 'Access denied' });
-    }
+    //  } else {
+    //     res.status(403).json({ msg: 'Access denied' });
+    // }
 };

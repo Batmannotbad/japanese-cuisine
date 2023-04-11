@@ -5,7 +5,7 @@ import { verifyToken } from '../middleware/auth.js';
 const router = express.Router();
 
 //CREATE
-router.post('/', verifyToken, createFood);
+router.post('/', createFood);
 
 //READ
 router.get('/categories', getFoodCategories);
@@ -16,7 +16,7 @@ router.get('/', getAllFoods);
 router.put('/:id', verifyToken, updateFood);
 
 //DELETE
-router.delete('/:id', verifyToken, deleteFood);
-router.delete('/', verifyToken, deleteFoods);
+router.delete('/:id', deleteFood);
+// router.delete('/', deleteFoods);
 
 export default router;
