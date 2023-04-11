@@ -13,10 +13,10 @@ router.get('/:id', getFood);
 router.get('/', getAllFoods);
 
 //UPDATE
-router.put('/:id', verifyToken, updateFood);
+router.put('/:id', updateFood);
 
 //DELETE
+router.delete('/many/:ids', deleteFoods);
 router.delete('/:id', deleteFood);
-// router.delete('/', deleteFoods);
 
 export default router;

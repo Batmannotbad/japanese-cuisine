@@ -73,13 +73,6 @@ export default function NewProduct() {
           <label>Type</label>
           <input type="text" placeholder="Category" name="type" onChange={handleChange}/>
         </div>
-        {/* <div className="addProductItem">
-          <label>Status</label>
-          <select name="isAvailable" id="active" onChange={handleChange}>
-            <option value="true" >Available</option>
-            <option value="false">Not Available</option>
-          </select>
-        </div> */}
 
         <div className="addProductItem">
           <label>Price</label>

@@ -1,14 +1,13 @@
 import {
   CloudUpload,
   Money,
-  Publish,
   Description,
   FormatQuote,
   FilterList,
   ShoppingCart,
 } from "@material-ui/icons";
-
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import "./user.css";
 import sasimage from '../../pages/images/hero-img-1.svg'
@@ -16,9 +15,38 @@ import { useState, useEffect } from "react";
 
 export default function Product() {
   const foodId = useParams();
-  const [food, setFood] = useState(null);
+  const navigate = useNavigate();
+  const [food, setFood] = useState({});
+  const [updateFood, setUpdateFood] = useState({});
+  const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
+  const [type, setType] = useState('');
+  const [price, setPrice] = useState(0);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setUpdateFood({...updateFood, [e.target.name]: value});
+    console.log(updateFood);
+  }
+
+  const handleSelectChange = (e) => {
+    const value = e.target.value;
+    let availableValue
+    if (value === 'true') availableValue = true;
+    availableValue = false;
+    setUpdateFood({...updateFood, "isAvailable": availableValue});
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(updateFood)
+
+    await axios.put(`http://localhost:3001/foods/${foodId.productId}`, updateFood);
+
+    navigate('/products');
+  }
+
   const getFood = async () => { 
-    console.log(foodId);
     const response = await fetch(`http://localhost:3001/foods/${foodId.productId}`, 
       {
         method: 'GET',
@@ -26,6 +54,17 @@ export default function Product() {
     );
     const data = await response.json();
     setFood(data);
+    setName(data.name);
+    setDesc(data.desc);
+    setPrice(data.price);
+    setType(data.type);
+    setUpdateFood({ 
+      "name": data.name,
+      "desc": data.desc, 
+      "price": data.price, 
+      "type": data.type,
+      "isAvailable": data.isAvailable,
+    });
   }
 
   useEffect(() => {
@@ -89,39 +128,59 @@ export default function Product() {
                 <label>Name</label>
                 <input
                   type="text"
-                  placeholder="Name"
+                  value={name}
                   className="userUpdateInput"
+                  onChange={(e) => {
+                    setName(e.target.value)
+                    handleChange(e)
+                  }}
+                  name="name"
                 />
               </div>
               <div className="userUpdateItem">
                 <label>Description</label>
                 <input
                   type="text"
-                  placeholder="Description"
+                  value={desc}
                   className="userUpdateInput"
+                  onChange={(e) => {
+                    setDesc(e.target.value)
+                    handleChange(e)
+                  }}
+                  name="desc"
                 />
               </div>
               <div className="userUpdateItem">
                 <label>Type</label>
                 <input
                   type="text"
-                  placeholder="Type"
+                  value={type}
                   className="userUpdateInput"
+                  onChange={(e) => {
+                    setType(e.target.value)
+                    handleChange(e)
+                  }}
+                  name="type"
                 />
               </div>
               <div className="userUpdateItem">
                 <label>Price</label>
                 <input
                   type="text"
-                  placeholder="Price"
+                  value={price}
                   className="userUpdateInput"
+                  onChange={(e) => {
+                    setPrice(e.target.value)
+                    handleChange(e)
+                  }}
+                  name="price"
                 />
               </div>
               <div className="userUpdateItem">
                 <label>Status</label>
-                <select name="active" id="active">
-                  <option value="true">Active</option>
-                  <option value="false">No Active</option>
+                <select name="isAvailable" id="active" onChange={handleSelectChange}>
+                  <option value="true">Available</option>
+                  <option value="false">Not Available</option>
                 </select>
               </div>
             </div>
@@ -132,13 +191,13 @@ export default function Product() {
                   src={sasimage}
                   alt=""
                 /> */}
-                <label>Upload image</label>
+                {/* <label>Upload image</label>
                 <label htmlFor="file">
                   <Publish className="userUpdateIcon" />
                 </label>
-                <input type="file" id="file" style={{ display: "none" }} />
+                <input type="file" id="file" style={{ display: "none" }} /> */}
               </div>
-              <button className="userUpdateButton">Update</button>
+              <button className="userUpdateButton" onClick={handleSubmit}>Update</button>
             </div>
           </form>
         </div>

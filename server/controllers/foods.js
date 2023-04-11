@@ -69,38 +69,31 @@ export const getFoodCategories = async (req, res) => {
 
 //UPDATE
 export const updateFood = async (req, res) => {
-    if (req.user.isAdmin) {
-        const {
-            name,
-            price,
-            desc,
-            picturePath,
-            type,
-            isAvailable
-        } = req.body;
+    // if (req.user.isAdmin) {
+        // const {
+        //     name,
+        //     price,
+        //     desc,
+        //     picturePath,
+        //     type,
+        //     isAvailable
+        // } = req.body;
         try {
             await getFoodsColelction().updateOne(
                 {
                     _id: new ObjectId(req.params.id)
                 },
                 {
-                    $set: {
-                        name: name,
-                        price: price,
-                        desc: desc,
-                        picturePath: picturePath,
-                        type: type,
-                        isAvailable: isAvailable
-                    }
+                    $set: req.body
                 }
             );
             res.status(200).json({ msg: "Updated successfully" });
         } catch (err) {
             res.status(500).json(err);
         }
-    } else {
-        res.status(403).json({ msg: 'Access denied' })
-    }
+    // } else {
+    //     res.status(403).json({ msg: 'Access denied' })
+    // }
 };
 
 //DELETE
@@ -124,14 +117,14 @@ export const deleteFood = async (req, res) => {
 //DELETE MANY
 export const deleteFoods = async (req, res) => {
     // if (req.user.isAdmin) {
-        const list = JSON.parse(req.body);
+        const list = req.params.ids;
+        const ids = list.split('_');
         let idList = [];
-        list.forEach(item => {
+        ids.forEach(item => {
             const id = new ObjectId(item)
             idList.push(id)
         });
         
-
         try {
             await getFoodsColelction().deleteMany(
                 {

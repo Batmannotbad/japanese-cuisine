@@ -24,13 +24,8 @@ export default function ProductList() {
 
   const handleDeleteAll = async () => {
     if (dataIds.length > 1) {
-      const idList = { ids: dataIds }
-      await fetch(`http://localhost:3001/foods/delete`, 
-        {
-          method: 'DELETE',
-          body: JSON.stringify(idList)
-        }
-      );
+      const idList = dataIds.join('_'); 
+      await axios.delete(`http://localhost:3001/foods/many/${idList}`);
       console.log(dataIds);
       console.log(dataIds.length)
   
@@ -126,6 +121,7 @@ export default function ProductList() {
           } else {
             setIsSelected(false);
           }
+          console.log(dataIds);
         }}
       />
     </div>
